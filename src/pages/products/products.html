@@ -1,0 +1,108 @@
+<ion-content>
+    <!-- Navigation Bar -->
+    <nav  class="navbar navbar-default shadow-navbar theme-bk" role="navigation">
+    <div class="middle-header theme-bk ">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12">
+           <img alt="Logo" src="images/logo.png" class="logo img-responsive" />
+          </div>
+        </div>
+      </div>
+    </div>
+    </nav>
+    <!-- End Navigation Bar -->
+    <nav  class="navbar navbar-default shadow-navbar theme-bk-2" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+            <a class="page-name" (click)="goBack()"><i class="back-icon fa fa-arrow-left" aria-hidden="true"></i>Vinos</a>
+            <a (click)="goToWish()" class="btn  visible-xs pull-right wishlist-icon">
+          <i class="fa fa-heart"><span class="badge">{{ wishs }}</span></i> 
+        </a>
+        <a (click)="goToCart()" class="btn  visible-xs pull-right cart-icon">
+          <i  class="fa fa-shopping-cart"><span class="badge">{{ carts }}</span></i> 
+        </a>
+          </div>
+      </div>
+    </nav>
+    <!-- End Navigation Bar -->
+    <!-- Main Content -->
+    <div class="container m-t-3">
+      <div class="row">
+
+        <!-- Filter Sidebar -->
+        <div class="col-sm-3 col-xs-12">
+          <div class="filter-sidebar">
+            <div class="title"><span>Buscar</span></div>
+            <form class="form-horizontal">
+              <div class="form-group" *ngIf="categories">
+                <label class="col-sm-2 control-label">Tipo</label>
+                <div class="col-sm-10 col-xs-12">
+                  <ion-select [(ngModel)]="category_id" interface="popover" class="form-control" (ngModelChange)="country_id = 0; region_id = 0; getProducts();" name="category" style="max-width: 100%">
+                    <ion-option *ngFor="let category of categories" value="{{ category.id }}">{{ category.title }}</ion-option>
+                  </ion-select>
+                </div>
+              </div>
+              <div class="form-group" *ngIf="countries">
+                <label class="col-sm-2 control-label" *ngIf="category_id != 3">Paises</label>
+                <label class="col-sm-2 control-label" *ngIf="category_id == 3">Categoría</label>
+                <div class="col-sm-10 col-xs-12">
+                  <ion-select [(ngModel)]="country_id" interface="popover" class="form-control" (ngModelChange)="region_id = 0; getProducts()" name="country" style="max-width: 100%">
+                    <ion-option value="0" selected>Seleccionar</ion-option>
+                    <ion-option *ngFor="let country of countries" value="{{ country.id }}">{{ country.name }}</ion-option>
+                  </ion-select>
+                </div>
+              </div>
+              <div class="form-group" *ngIf="regions && category_id != 3">
+                <label class="col-sm-2 control-label">Regiones</label>
+                <div class="col-sm-10 col-xs-12">
+                  <ion-select [(ngModel)]="region_id" interface="popover" class="form-control" (ngModelChange)="getProducts()" name="region" style="max-width: 100%">
+                    <ion-option value="0" selected>Seleccionar</ion-option>
+                    <ion-option *ngFor="let region of regions" value="{{ region.id }}">{{ region.title }}</ion-option>
+                  </ion-select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Rango de precio</label>
+                <div class="col-sm-10 col-xs-12">
+                  <ion-select [(ngModel)]="range" interface="popover" class="form-control" (ngModelChange)="getProducts()" name="range" style="max-width: 100%">
+                    <ion-option value="0" selected>Seleccionar</ion-option>
+                    <ion-option value="0-500">0-500</ion-option>
+                    <ion-option value="501-1000">501-1000</ion-option>
+                    <ion-option value="1001-2000">1001-2000</ion-option>
+                    <ion-option value="2001-3000">2001-3000</ion-option>
+                    <ion-option value="3001-5000">3001-5000</ion-option>
+                    <ion-option value="5000-10000000000">5000+</ion-option>
+                  </ion-select>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- End Filter Sidebar -->  
+        <div class="col-xs-6 col-sm-3" *ngFor="let product of products">
+          <div class="box-product">
+            <div class="img-wrapper">
+              <a (click)="productSelected(product)">
+                <img alt="Product" src="{{ product.image }}">
+              </a>
+              <div class="option">
+                <a *ngIf="product.stock > 0" (click)="addToCart(product.id)"><i class="fa fa-shopping-cart"></i></a>
+                <a (click)="addToWishlist(product.id)" class="wishlist"><i class="fa fa-heart"></i></a>
+              </div>
+            </div>
+            <div class="name-box"><h6><a (click)="productSelected(product)">{{ product.title }}</a></h6></div>
+            <div class="price-box">
+              <div class="price">
+                <div>RD ${{ product.price | number: '1.2-2' }} <span class="label-tags"></span></div>
+              </div>
+              <div class="rating">
+                <i class="fa fa-star" *ngFor="let item of createRange(product.total_stars);"></i>
+                <i class="fa fa-star-o" *ngFor="let item of createRange(product.minus_stars);"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</ion-content>

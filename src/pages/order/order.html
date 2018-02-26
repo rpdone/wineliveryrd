@@ -1,0 +1,39 @@
+<ion-content>
+     <div class="middle-header theme-bk ">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12">
+           <img alt="Logo" src="images/logo.png" class="logo img-responsive" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <nav  class="navbar navbar-default shadow-navbar theme-bk-2" role="navigation">
+      <div class="container">
+          <div class="navbar-header">
+            <a class="page-name" (tap)="goBack()"><i class="back-icon fa fa-arrow-left" aria-hidden="true"></i>Orden</a>
+            <a (click)="goToWish()" class="btn  visible-xs pull-right wishlist-icon">
+          <i class="fa fa-heart"><span class="badge">{{ wishs }}</span></i> 
+        </a>
+        <a (click)="goToCart()" class="btn  visible-xs pull-right cart-icon">
+          <i  class="fa fa-shopping-cart"><span class="badge">{{ carts }}</span></i> 
+        </a>
+          </div>
+      </div>
+    </nav>
+    <!-- Main Content -->
+    <div class="col-xs-12" *ngIf="order">
+      <div class="row">
+            <iframe [src]="getOrderUrl()" style="width: 100%; height: 80vh; border: none;"></iframe>
+            <!-- <div class="col-md-3">
+              <h4 class="section-title">se genero una orden a su nombre con los siguientes datos:</h4>
+              <p class="detailbox-items">Direccion:<span class="detailbox-content"> {{ order.saddress }}</span></p>
+              <p class="detailbox-items">Total items:<span class="detailbox-content">  {{ order.scounter }}</span></p>
+              <p class="detailbox-items">Costo:<span class="detailbox-content" ></span> RD ${{ order.stotal | number: '1.2-2' }}</p>
+              <p class="detailbox-items">Costo de envio:<span class="detailbox-content"></span> RD $90</p>
+              <p class="detailbox-items">Costo total:<span class="detailbox-content"></span> RD ${{ order.stotal + 90 | number: '1.2-2' }}</p>
+              <button type="button" (tap)="goTohome()" class="btn btn-theme  col-xs-12 margen-fondo">Entendido</button>
+            </div> -->
+      </div>
+    </div>
+</ion-content>

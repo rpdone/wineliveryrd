@@ -1,0 +1,91 @@
+<ion-content>
+    <div class="middle-header theme-bk ">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12">
+           <img alt="Logo" src="images/logo.png" class="logo img-responsive" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Middle Header -->
+    <nav  class="navbar navbar-default shadow-navbar theme-bk-2" role="navigation">
+      <div class="container">
+          <div class="navbar-header">
+            <a class="page-name" (tap)="goBack()"><i class="back-icon fa fa-arrow-left" aria-hidden="true"></i>Configuracion de dirección</a>
+            <a (click)="goToWish()" class="btn  visible-xs pull-right wishlist-icon">
+          <i class="fa fa-heart"><span class="badge">{{ wishs }}</span></i> 
+        </a>
+        <a (click)="goToCart()" class="btn  visible-xs pull-right cart-icon">
+          <i  class="fa fa-shopping-cart"><span class="badge">{{ carts }}</span></i> 
+        </a>
+          </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container m-t-3">
+      <div class="row" *ngIf="addresses">
+        <!-- My Address Content -->
+        <div class="col-sm-12 col-md-12" *ngIf="addresses.length > 0">
+          <div class="title m-b-2"><span>Direcciones guardadas</span></div>
+          <div class="row">
+            <div class="col-xs-12 col-md-4" *ngFor="let address of addresses">
+                <p>{{ address.calle }}, {{ address.residencial }} {{ address.numero }}, {{ address.sector }}, {{ address.proximo }}, {{ address.telefono }}</p>
+                  <a (tap)="deleteAddress(address.id, $event)"><i class="fa fa-trash-o action-icon"></i> </a>
+                  <a (tap)="editAddress(address)"><i class="fa fa-edit action-icon"></i> </a>
+            </div>
+          </div>
+        </div>
+        <!-- End My Address Content -->
+      </div>
+
+      <!-- My Address Content -->
+      <div class="row" *ngIf="sectors">
+        <!-- Checkout Form -->
+        <div class="col-md-9">
+        <div class="title"><span>Nueva direccion</span></div>
+          <form id="addressForm">
+            <div class="row">
+            <div class="form-group col-sm-6 col-xs-12">
+            <div class="alert alert-info" role="alert"><i class="fa fa-info-circle" aria-hidden="true"></i>  Si tu sector no esta en la lista es porque se sale de nuestro poligono de entregas. <strong>Disculpa los incovenientes.</strong></div>
+            </div>
+              <div class="form-group col-sm-6 col-xs-12">
+                <label >Sector</label>
+                <ion-select [(ngModel)]="sector_id" interface="popover" class="form-control" name="sector" style="max-width: 100%">
+                  <ion-option *ngFor="let sector of sectors" value="{{ sector.title }}">{{ sector.title }}</ion-option>
+                </ion-select>
+              </div>
+              <div class="form-group col-sm-6 col-xs-12">
+                <label >Calle</label>
+                <input type="text" class="form-control" #street name="street">
+              </div>
+              <div class="form-group col-sm-6 col-xs-12">
+                <label >Residencial y edificio</label>
+                <input type="text" class="form-control" #home name="home">
+              </div>
+              <div class="form-group col-sm-6 col-xs-12">
+                <label >Numero</label>
+                <input type="text" class="form-control" #number name="number">
+              </div>
+              <div class="form-group col-sm-6 col-xs-12">
+                <label>Telefono</label>
+                <input type="text" class="form-control" #phone name="phone">
+              </div>
+              <div class="form-group col-sm-6 col-xs-12">
+                <label>Celular</label>
+                <input type="text" class="form-control" #celphone name="celphone">
+              </div>
+              <div class="form-group col-sm-12 col-xs-12">
+                <label for="notesInput">Proximo a:</label>
+                <textarea class="form-control" rows="3" id="notesInput" #next name="next"></textarea>
+                <input type="hidden" name="edit_id" value="0" #edit_id>
+              </div>
+            </div>
+            <button (tap)="createAddress(street.value, home.value, number.value, phone.value, celphone.value, next.value, edit_id.value)" type="button" class="btn btn-theme col-xs-12 margen-fondo">Guardar Direccion</button>
+            <div class="clearfix visible-sm visible-xs"></div>
+          </form>
+      </div>
+    </div>
+    </div>
+</ion-content>

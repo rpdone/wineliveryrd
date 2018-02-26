@@ -1,0 +1,59 @@
+<ion-content>
+    <!-- Navigation Bar -->
+    <nav  class="navbar navbar-default shadow-navbar theme-bk" role="navigation">
+    <div class="middle-header theme-bk ">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12">
+           <img alt="Logo" src="images/logo.png" class="logo img-responsive" />
+          </div>
+        </div>
+      </div>
+    </div>
+    </nav>
+    <!-- End Navigation Bar -->
+    <nav  class="navbar navbar-default shadow-navbar theme-bk-2" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+            <a class="page-name" (click)="goBack()"><i class="back-icon fa fa-arrow-left" aria-hidden="true"></i>Resultado de busqueda</a>
+            <a (click)="goToWish()" class="btn  visible-xs pull-right wishlist-icon">
+          <i class="fa fa-heart"><span class="badge">{{ wishs }}</span></i> 
+        </a>
+        <a (click)="goToCart()" class="btn  visible-xs pull-right cart-icon">
+          <i  class="fa fa-shopping-cart"><span class="badge">{{ carts }}</span></i> 
+        </a>
+          </div>
+      </div>
+    </nav>
+    <!-- End Navigation Bar -->
+    <!-- Main Content -->
+    <div class="container m-t-3">
+    <div class="clearfix visible-sm visible-xs"></div>
+      <div class="row col-sm-12">
+      <div class="title"><span>Coincidencias encontradas</span></div>
+             <div class="col-xs-6 col-sm-3" *ngFor="let product of products">
+              <div class="box-product">
+                <div class="img-wrapper">
+                  <a (click)="productSelected(product)">
+                    <img alt="Product" src="{{ product.image }}">
+                  </a>
+                  <div class="option">
+                    <a *ngIf="product.stock > 0" (click)="addToCart(product.id)"><i class="fa fa-shopping-cart"></i></a>
+                    <a (click)="addToWishlist(product.id)" class="wishlist"><i class="fa fa-heart"></i></a>
+                  </div>
+                </div>
+                <div class="name-box"><h6><a (click)="productSelected(product)">{{ product.title }}</a></h6></div>
+                <div class="price-box">
+                  <div class="price">
+                    <div>RD ${{ product.price | number: '1.2-2' }} <span class="label-tags"></span></div>
+                  </div>
+                  <div class="rating">
+                    <i class="fa fa-star" *ngFor="let item of createRange(product.total_stars);"></i>
+              			<i class="fa fa-star-o" *ngFor="let item of createRange(product.minus_stars);"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+      </div>
+    </div>
+</ion-content>

@@ -1,0 +1,72 @@
+<ion-content>
+    <div class="middle-header theme-bk ">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12">
+           <img alt="Logo" src="images/logo.png" class="logo img-responsive" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Middle Header -->
+    <nav  class="navbar navbar-default shadow-navbar theme-bk-2" role="navigation">
+      <div class="container">
+          <div class="navbar-header">
+            <a class="page-name" (tap)="goBack()"><i class="back-icon fa fa-arrow-left" aria-hidden="true"></i>Historial de compra</a>
+            <a (click)="goToWish()" class="btn  visible-xs pull-right wishlist-icon">
+          <i class="fa fa-heart"><span class="badge">{{ wishs }}</span></i> 
+        </a>
+        <a (click)="goToCart()" class="btn  visible-xs pull-right cart-icon">
+          <i  class="fa fa-shopping-cart"><span class="badge">{{ carts }}</span></i> 
+        </a>
+          </div>
+      </div>
+    </nav>
+        <!-- Filter Sidebar -->
+        <div class="col-sm-3 margen-top">
+          <div class="filter-sidebar">
+            <form class="form-horizontal">
+              <div class="form-group">
+                <div class="col-sm-10">
+                <label >Filtrar por:</label>
+                  <ion-select [(ngModel)]="filter" interface="popover" class="form-control" (ngModelChange)="getHistory()" name="category" style="max-width: 100%">
+                    <ion-option value="1">Todas</ion-option>
+                    <ion-option value="2">Hoy</ion-option>
+                    <ion-option value="3">Hace un mes</ion-option>
+                    <ion-option value="4">Menos de 6 meses</ion-option>
+                    <ion-option value="5">Mas de un año</ion-option>
+                  </ion-select>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- My Profile Content -->
+        <div class="col-sm-8 col-md-9" *ngIf="orders">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <td>Compra</td>
+                      <td>Fecha</td>
+                      <td class="text-right">Monto</td>
+                      <td class="text-center">Estatus</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let order of orders" (click)="orderSelected(order)">
+                      <td>{{ order.quantity }} objetos</td>
+                      <td>{{ order.created_at }}</td>
+                      <td class="text-right">{{ order.total }}</td>
+                      <td class="text-center"><span class="label" [class.label-success]="order.status == 'Completada'" [class.label-warning]="order.status == 'Pendiente'" [class.label-info]="order.status == 'Procesando Orden'">{{ order.status }}</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End My Profile Content -->
+</ion-content>

@@ -1,0 +1,253 @@
+<ion-content>
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog" *ngIf="modal">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content" *ngIf="modal.type == 0">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">{{ modal.title }}</h4>
+      </div>
+      <br>
+      <div class="modal-body">
+        <a href="javascript:;" (click)="openBanner(modal.url)"><img alt="Product" src="{{ modal.image }}"></a>
+        <p style="margin-top: 10px">{{ modal.description }}</p>
+      </div>
+    </div>
+
+    <div class="modal-content" *ngIf="modal.type == 1">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">{{ modal.product.title }}</h4>
+      </div>
+      <div class="modal-body">
+        <img alt="Product" src="{{ modal.product.image }}" class="img-responsive">
+        <p>{{ modal.description }}</p>
+        <div class="price" style="font-size: 20px; text-align: center; font-weight: bold;">
+          <div>RD ${{ modal.product.price | number: '1.2-2' }} <span class="label-tags"></span></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button *ngIf="modal.product.stock > 0" type="button" class="btn btn-default" data-dismiss="modal" (click)="addToCart(modal.product.id)">Agregar al carrito</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="addToWishlist(modal.product.id)">Wishlist</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- Middle Header -->
+<div class="middle-header theme-bk">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+       <img alt="Logo" src="images/logo.png" class="logo img-responsive" />
+      </div>
+      <div class="col-sm-12 col-md-12 search-box m-t-2">
+        <div class="input-group">
+          <input type="text" class="form-control"  placeholder="Buscar" (keyup.enter)="searchProducts(search.value)" #search>
+          <div class="input-group-btn">
+            <button type="button" class="btn btn-default btn-search" (click)="searchProducts(search.value)"><i class="fa fa-search"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Middle Header -->
+<!-- Navigation Bar -->
+<nav  class="navbar navbar-default shadow-navbar theme-bk" role="navigation">
+  <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-ex1-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a (click)="goToWish()" class="btn  visible-xs pull-right wishlist-icon">
+          <i class="fa fa-heart"><span class="badge">{{ wishs }}</span></i> 
+        </a>
+        <a (click)="goToCart()" class="btn  visible-xs pull-right cart-icon">
+          <i  class="fa fa-shopping-cart"><span class="badge">{{ carts }}</span></i> 
+        </a>
+      </div>
+      <div class="collapse navbar-collapse" id="navbar-ex1-collapse">
+        <ul class="nav navbar-nav">
+          <li><a (click)="goToPage(1)">¿Cómo funciona Winelivery?</a></li>
+          <li><a (click)="goToPage(2)">Editar perfil</a></li>
+          <li><a (click)="goToPage(3)">Cambiar contraseña</a></li>
+          <li><a (click)="goToPage(4)">Editar direccion</a></li>
+          <li><a (click)="goToPage(5)">Historial de compra</a></li>
+          <li><a (click)="goToPage(6)">Terminos y condiciones</a></li>
+          <li><a (click)="goToPage(7)">Sobre nosotros</a></li> 
+          <li><a (click)="goToPage(8)">Configuración</a></li> 
+          <li><a (click)="logOut()">Salir</a></li>
+        </ul>
+      </div>
+  </div>
+</nav>
+<!-- End Navigation Bar -->
+
+<nav  class="navbar navbar-default shadow-navbar" role="navigation">
+  <div class="container">
+    <div class="navbar-header col-sm-12 col-md-12 wine-category">
+      <a class="col-xs-4 col-sm-4 col-md-4 category" *ngFor="let category of categories" (click)="goToProducts(category.id)"> {{ category.title }}</a>
+    </div>
+  </div>
+</nav>
+<!-- End Navigation Bar -->
+<!-- Main Content -->
+<div class="container m-t-2">
+  <div class="row col-sm-12">
+    <img *ngFor="let banner of banners" class="img-responsive margen-fondo" alt="add" src="{{ banner.image }}" (click)="openBanner(banner.url_m)">
+    <div class="clearfix visible-sm visible-xs"></div>
+  </div>
+
+  <div class="row col-sm-12" *ngIf="products">
+    <div class="clearfix visible-sm visible-xs"></div>
+    <!-- nuevos -->
+      <div class="title" style="width: 100%"><span>Nuevos en la bodega</span></div>
+        <div class="col-xs-6 col-sm-3" *ngFor="let product of products">
+          <div class="box-product">
+            <div class="img-wrapper">
+              <a (click)="productSelected(product)">
+                <img alt="Product" src="{{ product.image }}">
+              </a>
+              <div class="option">
+                <a *ngIf="product.stock > 0" (click)="addToCart(product.id)"><i class="fa fa-shopping-cart"></i></a>
+                <a (click)="addToWishlist(product.id)" class="wishlist"><i class="fa fa-heart"></i></a>
+              </div>
+            </div>
+            <div class="name-box"><h6><a (click)="productSelected(product)">{{ product.title }}</a></h6></div>
+            <div class="price-box">
+              <div class="price">
+                <div>RD ${{ product.price | number: '1.2-2' }} <span class="label-tags"></span></div>
+              </div>
+              <div class="rating">
+                <i class="fa fa-star" *ngFor="let item of createRange(product.total_stars);"></i>
+                <i class="fa fa-star-o" *ngFor="let item of createRange(product.minus_stars);"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+
+    <div class="row col-sm-12" *ngIf="special_products">
+    <div class="clearfix visible-sm visible-xs"></div>
+    <!-- nuevos -->
+      <div class="title" style="width: 100%"><span>Ofertas Especiales</span></div>
+        <div class="col-xs-6 col-sm-3" *ngFor="let product of special_products">
+          <div class="box-product">
+            <div class="img-wrapper">
+              <a (click)="productSelected(product)">
+                <img alt="Product" src="{{ product.image }}">
+              </a>
+              <div class="option">
+                <a *ngIf="product.stock > 0" (click)="addToCart(product.id)"><i class="fa fa-shopping-cart"></i></a>
+                <a (click)="addToWishlist(product.id)" class="wishlist"><i class="fa fa-heart"></i></a>
+              </div>
+            </div>
+            <div class="name-box"><h6><a (click)="productSelected(product)">{{ product.title }}</a></h6></div>
+            <div class="price-box">
+              <div class="price">
+                <div>RD ${{ product.price | number: '1.2-2' }} <span class="label-tags"></span></div>
+              </div>
+              <div class="rating">
+                <i class="fa fa-star" *ngFor="let item of createRange(product.total_stars);"></i>
+                <i class="fa fa-star-o" *ngFor="let item of createRange(product.minus_stars);"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End nuevos -->
+              <!-- Vino del mes -->
+        <div class="title"><span>Seleccion del mes</span></div>
+            <div class="col-xs-12 col-sm-12" *ngIf="monthly">
+              <div class="box-product">
+                <div class="img-wrapper">
+                  <a (click)="productSelected(monthly)">
+                    <img alt="Product" src="{{ monthly.image }}">
+                  </a>
+                  <div class="option">
+                    <a *ngIf="monthly.stock > 0" (click)="addToCart(monthly.id)"><i class="fa fa-shopping-cart"></i></a>
+                    <a (click)="addToWishlist(monthly.id)" class="wishlist"><i class="fa fa-heart"></i></a>
+                  </div>
+                </div>
+                <div class="name-box"><h6><a (click)="productSelected(monthly)">{{ monthly.title }}</a></h6></div>
+                    <p class="mes_cata" [innerHTML]="monthly.description"></p>
+                <div class="price-box">
+                  <div class="price">
+                    <div>RD ${{ monthly.price | number: '1.2-2' }} <span class="label-tags"></span></div>
+                  </div>
+                  <div class="rating">
+                    <i class="fa fa-star" *ngFor="let item of createRange(monthly.total_stars);"></i>
+                    <i class="fa fa-star-o" *ngFor="let item of createRange(monthly.minus_stars);"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+      <div class="col-xs-12" *ngIf="recommended_products">
+        <div class="title" style="width: 100%"><span>Vinos Recomendados</span></div>
+        <ion-slides pager>
+          <ion-slide *ngFor="let product of recommended_products">
+              <div class="col-xs-12 col-sm-12">
+                <div class="box-product">
+                  <div class="img-wrapper">
+                    <a (click)="productSelected(product)">
+                      <img alt="Product" src="{{ product.image }}">
+                    </a>
+                    <div class="option">
+                      <a *ngIf="product.stock > 0" (click)="addToCart(product.id)"><i class="fa fa-shopping-cart"></i></a>
+                      <a (click)="addToWishlist(product.id)" class="wishlist"><i class="fa fa-heart"></i></a>
+                    </div>
+                  </div>
+                  <div class="name-box"><h6><a (click)="productSelected(product)">{{ product.title }}</a></h6></div>
+                  <div class="price-box">
+                    <div class="price">
+                      <div>RD ${{ product.price | number: '1.2-2' }} <span class="label-tags"></span></div>
+                    </div>
+                    <div class="rating">
+                      <i class="fa fa-star" *ngFor="let item of createRange(product.total_stars);"></i>
+                      <i class="fa fa-star-o" *ngFor="let item of createRange(product.minus_stars);"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </ion-slide>
+        </ion-slides>
+      </div>
+      <div class="col-xs-12" *ngIf="inlay_products">
+        <div class="title" style="width: 100%"><span>Embutidos Recomendados</span></div>
+        <ion-slides pager>
+          <ion-slide *ngFor="let product of inlay_products">
+              <div class="col-xs-12 col-sm-12">
+                <div class="box-product">
+                  <div class="img-wrapper">
+                    <a (click)="productSelected(product)">
+                      <img alt="Product" src="{{ product.image }}">
+                    </a>
+                    <div class="option">
+                      <a *ngIf="product.stock > 0" (click)="addToCart(product.id)"><i class="fa fa-shopping-cart"></i></a>
+                      <a (click)="addToWishlist(product.id)" class="wishlist"><i class="fa fa-heart"></i></a>
+                    </div>
+                  </div>
+                  <div class="name-box"><h6><a (click)="productSelected(product)">{{ product.title }}</a></h6></div>
+                  <div class="price-box">
+                    <div class="price">
+                      <div>RD ${{ product.price | number: '1.2-2' }} <span class="label-tags"></span></div>
+                    </div>
+                    <div class="rating">
+                      <i class="fa fa-star" *ngFor="let item of createRange(product.total_stars);"></i>
+                      <i class="fa fa-star-o" *ngFor="let item of createRange(product.minus_stars);"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </ion-slide>
+        </ion-slides>
+      </div>
+     <div class="clearfix visible-sm visible-xs"></div>
+  </div>
+</ion-content>

@@ -1,0 +1,180 @@
+<ion-content>
+    <div class="middle-header theme-bk ">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12">
+           <img alt="Logo" src="images/logo.png" class="logo img-responsive" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Middle Header -->
+    <nav  class="navbar navbar-default shadow-navbar theme-bk-2" role="navigation">
+      <div class="container">
+          <div class="navbar-header">
+            <a class="page-name" (tap)="goBack()"><i class="back-icon fa fa-arrow-left" aria-hidden="true"></i>Detalle del producto</a>
+            <a (click)="goToWish()" class="btn  visible-xs pull-right wishlist-icon">
+          <i class="fa fa-heart"><span class="badge">{{ wishs }}</span></i> 
+        </a>
+        <a (click)="goToCart()" class="btn  visible-xs pull-right cart-icon">
+          <i  class="fa fa-shopping-cart"><span class="badge">{{ carts }}</span></i> 
+        </a>
+          </div>
+      </div>
+    </nav>
+    <div class="container m-t-3">
+
+        <div class="row">
+            <!-- Image List -->
+            <div class="col-xs-12">
+                <img src="{{ product.image }}" alt="" class="img-responsive">
+            </div>
+            <!-- End Image List -->
+            <div  class="col-xs-12" *ngIf="product.type == 1">
+                <div class="title"><span>{{ product.title }}</span></div>
+                <p>Precio: <span class="price-detail">RD ${{ product.price | number: '1.2-2' }}</span></p>
+                <p class="detail">Tipo: <span class="detail-content">{{ product.category.title }}</span></p>
+                <p class="detail">Productor: <span class="detail-content">{{ product.productor }}</span></p>
+                <p class="detail">Pais: <span class="detail-content">{{ product.region.country.name }}</span></p>
+                <p class="detail">Region: <span class="detail-content">{{ product.region.title }}</span></p>
+                <p class="detail">Uvas: <span class="detail-content" *ngFor="let uva of product.uvas">{{ uva.title }}, </span></p>
+                <p class="detail">Capacidad: <span class="detail-content">{{ product.capacity }}</span></p>
+                <p class="detail">Volumen de alcohol: <span class="detail-content">{{ product.volume }}%</span></p>
+                <p class="detail">Maridaje: <span class="detail-content">{{ product.maridaje }}</span></p>
+                <button *ngIf="product.stock > 0" class="btn btn-theme m-b-1" type="button" (tap)="addToCart(product.id)">
+          		<i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al carrito</button>
+                <button class="btn btn-theme1 m-b-1" type="button" (tap)="addToWishlist(product.id)"><i class="fa fa-heart" aria-hidden="true"></i> Agregar a la lista de deseos</button><br>
+                <a class="btnShare" href="javascript:;" (tap)="shareOnFacebook()"><i style="color:#3B5998;font-size:32px;padding:10px" class="fa fa-facebook-square" aria-hidden="true"></i></a>
+                <a class="icon-twitter" href="javascript:;" (tap)="shareOnTwitter()"><i style="color:#1dcaff; font-size:32px;" class="fa fa-twitter-square" aria-hidden="true"></i></a>
+            </div>
+            <div  class="col-xs-12" *ngIf="product.type == 2">
+                <div class="title"><span>{{ product.title }}</span></div>
+                <p>Precio: <span class="price-detail">RD ${{ product.price | number: '1.2-2' }}</span></p>
+                <p class="detail">Peso: <span class="detail-content">{{ product.peso }}</span></p>
+                <button *ngIf="product.stock > 0" class="btn btn-theme m-b-1" type="button" (tap)="addToCart(product.id)">
+                <i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al carrito</button>
+                <button class="btn btn-theme1 m-b-1" type="button" (tap)="addToWishlist(product.id)"><i class="fa fa-heart" aria-hidden="true"></i> Agregar a la lista de deseos</button><br>
+                <a class="btnShare" href="javascript:;" (tap)="shareOnFacebook()"><i style="color:#3B5998;font-size:32px;padding:10px" class="fa fa-facebook-square" aria-hidden="true"></i></a>
+                <a class="icon-twitter" href="javascript:;" (tap)="shareOnTwitter()"><i style="color:#1dcaff; font-size:32px;" class="fa fa-twitter-square" aria-hidden="true"></i></a>
+            </div>
+            <div  class="col-xs-12" *ngIf="product.type == 3">
+                <div class="title"><span>{{ product.title }}</span></div>
+                <p>Precio: <span class="price-detail">RD ${{ product.price | number: '1.2-2' }}</span></p>
+                <p class="detail">Capacidad: <span class="detail-content">{{ product.capacity }}</span></p>
+                <button *ngIf="product.stock > 0" class="btn btn-theme m-b-1" type="button" (tap)="addToCart(product.id)">
+                <i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al carrito</button>
+                <button class="btn btn-theme1 m-b-1" type="button" (tap)="addToWishlist(product.id)"><i class="fa fa-heart" aria-hidden="true"></i> Agregar a la lista de deseos</button><br>
+                <a class="btnShare" href="javascript:;" (tap)="shareOnFacebook()"><i style="color:#3B5998;font-size:32px;padding:10px" class="fa fa-facebook-square" aria-hidden="true"></i></a>
+                <a class="icon-twitter" href="javascript:;" (tap)="shareOnTwitter()"><i style="color:#1dcaff; font-size:32px;" class="fa fa-twitter-square" aria-hidden="true"></i></a>
+            </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12" *ngIf="product.embutidos">
+        <div class="title" style="width: 100%"><span>Embutidos Recomendados</span></div>
+        <ion-slides pager>
+          <ion-slide *ngFor="let product of product.embutidos">
+              <div class="col-xs-12 col-sm-12">
+                <div class="box-product">
+                  <div class="img-wrapper">
+                    <a (click)="productSelected(product)">
+                      <img alt="Product" src="{{ product.image }}">
+                    </a>
+                    <div class="option">
+                      <a *ngIf="product.stock > 0" (click)="addToCart(product.id)"><i class="fa fa-shopping-cart"></i></a>
+                      <a (click)="addToWishlist(product.id)" class="wishlist"><i class="fa fa-heart"></i></a>
+                    </div>
+                  </div>
+                  <div class="name-box"><h6><a (click)="productSelected(product)">{{ product.title }}</a></h6></div>
+                  <div class="price-box">
+                    <div class="price">
+                      <div>RD ${{ product.price | number: '1.2-2' }} <span class="label-tags"></span></div>
+                    </div>
+                    <div class="rating">
+                      <i class="fa fa-star" *ngFor="let item of createRange(product.total_stars);"></i>
+                      <i class="fa fa-star-o" *ngFor="let item of createRange(product.minus_stars);"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </ion-slide>
+        </ion-slides>
+      </div>
+    </div>
+    <br><br>
+    <div class="row">
+            <div class="col-md-12">
+                <div class="">
+                    <!-- Description Tab Content -->
+                    <div id="desc" *ngIf="product.description">
+                        <div class="well">
+                            <h4>Descripción</h4>
+                            <p [innerHTML]="product.description"></p>
+                        </div>
+                    </div>
+                    <!-- End Description Tab Content -->
+                    <!-- Review Tab Content -->
+                    <div class="" *ngIf="product.reviews && product.reviews.length > 0">
+                        <div class="title"><span>Review de catadores</span></div>
+                        <div class="well">
+                            <div class="media" *ngFor="let review of product.reviews">
+                                <div class="media-left">
+                                    <a href="#">
+                                        <img class="review-img media-object img-thumbnail" alt="64x64"  src="{{ review.image }}">
+                                    </a>
+                                    <div class="product-rating">
+                                        <i class="fa fa-star" *ngFor="let item of createRange(review.stars);"></i>
+                						<i class="fa fa-star-o" *ngFor="let item of createRange(review.starsless);"></i>
+                                    </div>
+                                </div>
+                                <div class="media-body">
+                                    <h5 class="media-heading"><strong>{{ review.taste.name }}</strong></h5>
+                                    {{ review.comment }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Review Tab Content -->
+
+                </div>
+                <!-- End Tab panes -->
+
+            </div>
+        </div>
+        <div>
+            <div class="title"><span>Evalua este producto</span></div>
+            <div class="col-md-12 margen-fondo">
+                  <form class="evaluacion-detalle">
+                    <p class="clasificacion">
+	                   <input id="radio1" type="radio" name="estrellas" value="5" (tap)="setStars(5)" />
+	                   <label for="radio1">★</label>
+	                   <input id="radio2" type="radio" name="estrellas" value="4" (tap)="setStars(4)" />
+	                   <label for="radio2">★</label>
+	                   <input id="radio3" type="radio" name="estrellas" value="3" (tap)="setStars(3)" />
+	                   <label for="radio3">★</label>
+	                   <input id="radio4" type="radio" name="estrellas" value="2" (tap)="setStars(2)" />
+	                   <label for="radio4">★</label>
+	                   <input id="radio5" type="radio" name="estrellas" value="1" (tap)="setStars(1)" />
+	                   <label for="radio5">★</label>
+                     </p>
+                    <button type="button" class="btn btn-theme" (tap)="submitStars()">Votar</button>
+                  </form>
+            </div>
+
+                <div class="form-group col-md-12 margen-top">
+                    <label for="Review">Deja tu comentario</label>
+                    <textarea id="Review" class="form-control" rows="5" #review name="review"></textarea>
+                </div>
+                <div class="form-group col-md-12">
+                    <button type="button" class="btn btn-theme" (tap)="submitReview(review.value)">Enviar review</button>
+                </div>
+
+            <div class="comments ">
+                <div class="col-md-12 comments-box" *ngFor="let comment of product.comments">
+                    <p class="comments-name">{{ comment.user.name }}</p>
+                    <p class="comments-date">{{ comment.created_at }}</p>
+                    {{ comment.comment }}
+                </div>
+            </div>
+        </div>
+    </div>
+</ion-content>

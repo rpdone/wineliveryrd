@@ -1,0 +1,58 @@
+<ion-content>
+    <div class="middle-header theme-bk ">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12">
+           <img alt="Logo" src="images/logo.png" class="logo img-responsive" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Middle Header -->
+    <nav  class="navbar navbar-default shadow-navbar theme-bk-2" role="navigation">
+      <div class="container">
+          <div class="navbar-header">
+            <a class="page-name" (tap)="goBack()"><i class="back-icon fa fa-arrow-left" aria-hidden="true"></i>Wishlist</a>
+            <a class="btn  visible-xs pull-right wishlist-icon">
+          <i class="fa fa-heart"><span class="badge">{{ wishs }}</span></i> 
+        </a>
+        <a (click)="goToCart()" class="btn  visible-xs pull-right cart-icon">
+          <i  class="fa fa-shopping-cart"><span class="badge">{{ carts }}</span></i> 
+        </a>
+          </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container m-t-3">
+      <div class="row">
+        <!-- Shopping Cart List -->
+        <div class="col-md-4">
+          <div >
+            <table class="table table-cart " >
+              <thead>
+                <tr>
+                  <th>Producto</th>
+                  <th>Disponibilidad</th>
+                  <th>Precio</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                 <tr *ngFor="let product of products">
+                  <td>
+                      <a (click)="productSelected(product.product)">{{ product.product.title }}</a><br>
+                      <a (tap)="deleteFromWishlist(product.product.id, $event)" class="text-danger" data-toggle="tooltip" data-placement="top" data-original-title="Remove"><i class="fa fa-trash-o" style="font-size: 30px"></i></a>   
+                  </td>
+                  <td class="unit" *ngIf="product.product.stock >= 1">En La Bodega</td>
+                  <td class="unit" *ngIf="product.product.stock < 1">Agotado</td>
+                  <td class="sub">RD ${{ product.product.price | number: '1.2-2' }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- End Shopping Cart List -->
+      </div>
+    </div>
+</ion-content>

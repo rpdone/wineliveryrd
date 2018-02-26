@@ -1,0 +1,48 @@
+<ion-content>
+    <div class="middle-header theme-bk ">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3">
+           <img alt="Logo" src="images/logo.png" class="logo img-responsive" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Middle Header -->
+    <nav  class="navbar navbar-default shadow-navbar theme-bk-2" role="navigation">
+      <div class="container">
+          <div class="navbar-header">
+            <a class="page-name" (tap)="goBack()"><i class="back-icon fa fa-arrow-left" aria-hidden="true"></i>Configuración</a>
+            <a (click)="goToWish()" class="btn  visible-xs pull-right wishlist-icon">
+          <i class="fa fa-heart"><span class="badge">{{ wishs }}</span></i> 
+        </a>
+        <a (click)="goToCart()" class="btn  visible-xs pull-right cart-icon">
+          <i  class="fa fa-shopping-cart"><span class="badge">{{ carts }}</span></i> 
+        </a>
+          </div>
+      </div>
+    </nav>
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12" style="margin-top: 20px">
+                  <table class="table">
+                    <th>
+                      <!-- <a href="javascript:;">Deseo recibir notificaciones de ofertas <label class="switch">
+                        <input type="checkbox">
+                        <div class="slider round"></div>
+                      </label></a> -->
+                      <ion-item>
+						  <ion-label> Deseo recibir notificaciones de ofertas</ion-label>
+						  <ion-toggle [(ngModel)]="notifications" (ngModelChange)="toggleNotifications()" color="danger"></ion-toggle>
+						</ion-item>
+                    </th>
+                  </table>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+</ion-content>

@@ -1,0 +1,77 @@
+<ion-content>
+    <div class="middle-header theme-bk ">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12">
+           <img alt="Logo" src="images/logo.png" class="logo img-responsive" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Middle Header -->
+    <nav  class="navbar navbar-default shadow-navbar theme-bk-2" role="navigation">
+      <div class="container">
+          <div class="navbar-header">
+            <a class="page-name" (tap)="goBack()"><i class="back-icon fa fa-arrow-left" aria-hidden="true"></i>¿Cómo funciona Winelivery?</a>
+            <a (click)="goToWish()" class="btn  visible-xs pull-right wishlist-icon">
+          <i class="fa fa-heart"><span class="badge">{{ wishs }}</span></i> 
+        </a>
+        <a (click)="goToCart()" class="btn  visible-xs pull-right cart-icon">
+          <i  class="fa fa-shopping-cart"><span class="badge">{{ carts }}</span></i> 
+        </a>
+          </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 class="section-heading-1">¿Cómo funciona?</h2>
+                    <p class="section-paragraph">Winelivery es una tienda de vinos online con entrega inmediata en tu hogar o en cualquier lugar que te encuentres..</p>
+                     <div class="col-sm-6 col-md-3">
+                        <div style="text-align: center;">
+                          <img src="images/1.png" alt="...">
+                          <div class="caption">
+                            <h3>Registrate</h3>
+                            <p>Crea tu cuenta llenando los datos requeridos.</p>
+                          </div>
+                        </div>
+                      </div>
+
+
+                    <div class="col-sm-6 col-md-3">
+                        <div style="text-align: center;">
+                          <img src="images/2.png" alt="...">
+                          <div class="caption">
+                            <h3>Elige</h3>
+                            <p>Elige el vino que deseas tomar y agregalo a tu carrito de compras.</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-6 col-md-3">
+                        <div style="text-align: center;">
+                          <img src="images/3.png" alt="...">
+                          <div class="caption">
+                            <h3>Ordena</h3>
+                            <p>Necesitaras ingresar tu direccion con detalles de cercania que luego permanecera grabada en tu perfil.</p>
+                          </div>
+                        </div>
+                      </div>
+
+                    <div class="col-sm-6 col-md-3">
+                        <div style="text-align: center;">
+                          <img src="images/4.png" alt="...">
+                          <div class="caption">
+                            <h3>Espera</h3>
+                            <p>Tus vinos llegaran en menos de 1 hora y podras pagar con tu tarjeta de crédito o efectivo.</p>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</ion-content>

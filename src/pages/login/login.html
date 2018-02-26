@@ -1,0 +1,37 @@
+<ion-content>
+	<div class="margen-top">
+	  <div class="container">
+	    <div class="row">
+	      <div class="col-xs-12">
+	       <img alt="Logo" src="images/winelivery-01.png" class="logo img-responsive" />
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- End Middle Header -->
+
+	<div class="container m-t-3">
+	  <div class="row">
+	    <div class="col-xs-12">
+	      <form>
+	        <div class="row">
+	          <div class="form-group col-sm-6 col-xs-12">
+	            <label >Correo</label>
+	            <input type="email" class="form-control" (keyup.enter)="logIn(email.value, password.value)" #email>
+	          </div>
+	          <div class="form-group col-sm-6 col-xs-12">
+	            <label>Password</label>
+	            <input type="Password" class="form-control" (keyup.enter)="logIn(email.value, password.value)" #password>
+	          </div>
+	        </div>
+	        <button type="button" class="btn btn-theme col-xs-12 " (tap)="logIn(email.value, password.value)">Acceder</button>
+	        <a style="color: #c1272d; font-size: 700; margin-top: 40px; display: block;" (tap)="goToForgot()">Olvide mi contraseña</a>
+	      </form>
+	      <div class="margen-top">
+	        <hr />
+	          <p>¿Aun no tienes una cuenta? <a style="color: #c1272d; font-size: 700;" (tap)="goToRegister()">Crear cuenta</a></p>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</ion-content>

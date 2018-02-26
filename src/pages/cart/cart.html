@@ -1,0 +1,103 @@
+<ion-content>
+    <div class="middle-header theme-bk ">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12">
+           <img alt="Logo" src="images/logo.png" class="logo img-responsive" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Middle Header -->
+    <nav  class="navbar navbar-default shadow-navbar theme-bk-2" role="navigation">
+      <div class="container">
+          <div class="navbar-header">
+            <a class="page-name" (tap)="goBack()"><i class="back-icon fa fa-arrow-left" aria-hidden="true"></i>Carrito de compras</a>
+            <a (click)="goToWish()" class="btn  visible-xs pull-right wishlist-icon">
+          <i class="fa fa-heart"><span class="badge">{{ wishs }}</span></i> 
+        </a>
+        <a class="btn  visible-xs pull-right cart-icon">
+          <i  class="fa fa-shopping-cart"><span class="badge">{{ carts }}</span></i> 
+        </a>
+          </div>
+      </div>
+    </nav>
+    <!-- Main Content -->
+    <div class="container m-t-3">
+      <div class="row">
+        <!-- Shopping Cart List -->
+        <div class="col-md-4">
+          <div >
+            <table class="table table-cart table-style" >
+              <thead>
+                <tr>
+                  <th>Producto</th>
+                  <th>Cantidad</th>
+                  <th>Unidad</th>
+                  <th>SubTotal</th>
+                </tr>
+              </thead>
+              <tbody>
+                 <tr *ngFor="let product of products">
+                  <td>
+                      <a (click)="productSelected(product.product)">{{ product.product.title }}</a><br>
+                      <a (tap)="deleteFromCart(product.id, $event)" class="text-danger" data-toggle="tooltip" data-placement="top" data-original-title="Remove"><i class="fa fa-trash-o" style="font-size: 30px"></i></a>   
+                  </td>
+                  <td class=""><input type="number" value="{{ product.quantity }}" class="form-control text-center" (blur)="updateCart(product.id, $event)" (keyup.enter)="updateCart(product.id, $event)" /></td>
+                  <td class="unit">RD ${{ product.product.price | number: '1.2-2' }}</td>
+                  <td class="sub">RD ${{ product.product.price * product.quantity | number: '1.2-2' }}</td>
+                </tr>
+                <tr>
+                  <td colspan="3" class="text-right">Total</td>
+                  <td colspan="3"><b>RD ${{ total | number: '1.2-2' }}</b></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- End Shopping Cart List -->
+        <div class="col-xs-12" *ngIf="products">
+          <div class="title" style="width: 100%"><span>Embutidos Recomendados</span></div>
+          <ion-slides pager>
+            <ion-slide *ngFor="let product of inlay_products">
+                <div class="col-xs-12 col-sm-12">
+                  <div class="box-product">
+                    <div class="img-wrapper">
+                      <a (click)="productSelected(product)">
+                        <img alt="Product" src="{{ product.image }}">
+                      </a>
+                      <div class="option">
+                        <a *ngIf="product.stock > 0" (click)="addToCart(product.id)"><i class="fa fa-shopping-cart"></i></a>
+                        <a (click)="addToWishlist(product.id)" class="wishlist"><i class="fa fa-heart"></i></a>
+                      </div>
+                    </div>
+                    <div class="name-box"><h6><a (click)="productSelected(product)">{{ product.title }}</a></h6></div>
+                    <div class="price-box">
+                      <div class="price">
+                        <div>RD ${{ product.price | number: '1.2-2' }} <span class="label-tags"></span></div>
+                      </div>
+                      <div class="rating">
+                        <i class="fa fa-star" *ngFor="let item of createRange(product.total_stars);"></i>
+                        <i class="fa fa-star-o" *ngFor="let item of createRange(product.minus_stars);"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </ion-slide>
+          </ion-slides>
+        </div>
+        
+        <div class="panel col-xs-12 cart-detailbox" style="margin-top: 60px" *ngIf="products">
+          <div class="panel-body" *ngIf="products.length > 0">
+            <h4>Orden de compra</h4>
+            <p class="detailbox-items">Total items:<span class="detailbox-content"> {{ products.length }}</span></p>
+            <p class="detailbox-items">Costo:<span class="detailbox-content" > RD ${{ total | number: '1.2-2' }}</span></p>
+            <p class="detailbox-items">Costo de envio:<span class="detailbox-content"> RD $90</span></p>
+            <p class="detailbox-items">Costo total:<span class="detailbox-content"> RD ${{ total + 90| number: '1.2-2' }}</span></p>
+            <button (tap)="goToCheckout()" class="btn btn-theme col-xs-12 ">Procesar orden</button>
+          </div>
+        </div>
+        <!-- Related Products -->
+      </div>
+    </div>
+</ion-content>
